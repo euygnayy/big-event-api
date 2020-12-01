@@ -6,6 +6,8 @@ const path = require('path')
 
 // 导入密码加密
 const utility = require('utility')
+// 导入token
+const jwt = require('jsonwebtoken')
 // 导入数据库通用模块
 const db = require(path.join(__dirname,'../common.js'))
 
@@ -67,9 +69,14 @@ router.post('/login',async(req, res)=>{
     let ret = await db.operateDb(sql, [params.username,params.password])
     // 3.根据判断的接口进行返回
     if(ret && ret.length > 0){
+        // 参数一便是添加进token中的数据：一般存储用户的唯一编号
+        // 参数二表示加密字符串
+        // 参数三表示token的配置信息（配置有效期）
+        let token = jwt.sign({id:ret[0].id},'bigevent',{expiresIn: '2 days'})
         res.json({
             status:0,
-            message:'登录成功'
+            message:'登录成功',
+            token:'Bearer' + token
         })
     }else {
         res.json({
