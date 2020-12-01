@@ -4,6 +4,8 @@
 const express = require('express')
 const path = require('path')
 
+// 导入密码加密
+const utility = require('utility')
 // 导入数据库通用模块
 const db = require(path.join(__dirname,'../common.js'))
 
@@ -17,6 +19,8 @@ const router = express.Router()
 router.post('/reguser',async(req, res) =>{
     // 1.获取表单数据
     var params = req.body
+    // 对密码进行加密处理
+    params.password = utility.md5(params.password)
 
     // 1.1插入数据库之前 添加用户名重复性判断
     let csql = 'select id from myuser where username = ?'
@@ -34,6 +38,7 @@ router.post('/reguser',async(req, res) =>{
     var sql = 'insert into myuse set ?'
     var ret = await db.operateDb(sql,{params})
     // username: params.username,password:params.password
+
     // 3.返回一个操作结果
     // 告诉前端插入是否成功
     if(ret && ret.affectedRows > 0){
