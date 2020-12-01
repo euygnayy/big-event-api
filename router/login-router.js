@@ -14,8 +14,10 @@ const router = express.Router()
 
 // 测试数据库接口
 router.get('/test', async (req, res) => {
+    // 执行数据库操作
     let sql = 'select * from myuser'
     let ret = await db.operateDb(sql, null)
+    // 表示数据要为真 不可以是空字符串 如果是数组 长度要大于0  
     if (ret && ret.length > 0) {
       res.json({
         status: 0,

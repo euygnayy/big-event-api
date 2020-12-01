@@ -13,7 +13,7 @@ function operateDb (sql, params) {
       // 数据库所在计算机的IP地址或者域名
       host: 'localhost',
       // 数据库的端口
-      port: 3307,
+      port: 3306,
       // 数据库名称
       database: '117',
       // 登录数据库的账号名称
