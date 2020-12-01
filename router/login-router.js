@@ -12,6 +12,33 @@ const db = require(path.join(__dirname,'../common.js'))
 // 在入口文件中通过app.use方法把router中的路由配置到全局上
 const router = express.Router()
 
+
+// 注册接口
+router.post('/reguser',async(req, res) =>{
+    // 1.获取表单数据
+    var params = req.body
+    // 2.把数据插入数据库
+    var sql = 'insert into myuse set ?'
+    var ret = await db.operateDb(sql,{params})
+    // username: params.username,password:params.password
+    // 3.返回一个操作结果
+    // 告诉前端插入是否成功
+    if(ret && ret.affectedRows > 0){
+        // 注册成功
+        res.json({
+            status:0,
+            message:'注册成功'
+        })
+    }else{
+        res.json({
+            status:1,
+            message:'注册失败'
+        })
+    }
+})
+
+
+
 // 测试数据库接口
 router.get('/test', async (req, res) => {
     // 执行数据库操作
