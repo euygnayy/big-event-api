@@ -2,8 +2,9 @@ const express = require('express')
 const cors = require('cors')
 const path = require('path')
 const app = express()
+
 // 导入路由文件
-const loginRouter = require(path.join(__dirname),'router/login-router.js')
+const loginRouter = require(path.join(__dirname,'router/login-router.js'))
 
 // 配置跨域
 app.use(cors())
@@ -25,6 +26,7 @@ app.listen(8888, () => {
 // app.use函数的参数二表示独立的路由模块
 app.use('api',loginRouter)
 
-app.get('/data', (req, res) => {
-  res.send('hello')
-})
+
+// app.get('/data', (req, res) => {
+//   res.send('hello')
+// })
